@@ -5,7 +5,6 @@ import TwitchIntegration            #Twitch API file
 import os                           #open .env files
 from dotenv import load_dotenv
 
-streamer = "shahzam"
 
 #creating a bot instance, the connection to discord
 bot = commands.Bot(command_prefix="$")
