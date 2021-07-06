@@ -29,14 +29,16 @@ def get_stream(streamer):
     streamUserProfile = requests.get(url = streamerURL, headers = HEAD)
     userProfileData = json.loads(streamUserProfile.text)
     
-    #shortening the reference to stream/streamer data
-    streamDataParsed = streamData['data'][0]
-    userDataParsed = userProfileData['data'][0]
     
-    #check if the streamer is live based on whether the data object exists, then trying to find the viewer count
+    
+    #check if the streamer is live based on whether the data object exists
+    # If so we grab a bunch of other data such as viewer count and format it as json for ease of use later
     streamInfo = {}
     if streamData['data'] != []:
         try: 
+            #shortening the reference to stream/streamer data
+            streamDataParsed = streamData['data'][0]
+            userDataParsed = userProfileData['data'][0]
             streamInfo = {
                 'live': True, 
                 'name': userDataParsed['display_name'], 
@@ -52,13 +54,10 @@ def get_stream(streamer):
     else:
         streamInfo = {
                 'live': False, 
-                'name': userDataParsed['display_name'], 
-                'pfp': userDataParsed['profile_image_url'], 
+                'name': userProfileData['data'][0]['display_name'], 
+                'pfp': userProfileData['data'][0]['profile_image_url'], 
                 }
     return streamInfo
-    #viewers = streamData['viewer_count']
-    #print(streamData)
-    #return streamData
 
 class TwitchDiscordCog(commands.Cog):
     def __init__(self, bot):
