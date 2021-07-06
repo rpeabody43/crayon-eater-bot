@@ -1,5 +1,3 @@
 .env
-__pycache__/TwitchIntegration.cpython-37.pyc
 .vs/Crayon Eater Discord Bot/v16/.suo
-Commands/__pycache__/TwitchIntegration.cpython-37.pyc
-Commands/__pycache__/UltimateFrameData.cpython-37.pyc
+Commands/__pycache__
