@@ -4,8 +4,7 @@ from discord.ext import commands    #commands module of the discord api
 import os                           #open .env files
 from dotenv import load_dotenv
 
-#creating a bot instance, the connection to discord
-bot = commands.Bot(command_prefix="$")
+bot = commands.Bot(command_prefix="$") #creating a bot instance, the connection to discord
 bot.load_extension('Commands.TwitchIntegration')
         
 load_dotenv()

@@ -59,13 +59,14 @@ def get_stream(streamer):
                 }
     return streamInfo
 
+#A cog is kinda like a commands module for discord
 class TwitchDiscordCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
     @commands.command()
     async def stream(self, ctx, arg):
-        #get the stream information from the Twitch API file
+        #get the stream information from the appropriate function
         streamEmbedDict = get_stream(arg)
     
         #if the stream is live then use its data to update the embed
