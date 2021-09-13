@@ -18,7 +18,7 @@ def get_stream(streamer):
     HEAD = {"Authorization": AccessToken, 
             "Client-Id": Client_ID}
 
-    streamURL = "https://api.twitch.tv/helix/streams?user_login=" + streamer #streamer api link (tenz for now because he was live at the time)
+    streamURL = "https://api.twitch.tv/helix/streams?user_login=" + streamer #streamer api link 
     #get the data on a specific stream from the api and convert it to json
     stream = requests.get(url = streamURL, headers = HEAD)
     streamData = json.loads(stream.text)
