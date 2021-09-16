@@ -15,4 +15,8 @@ load_dotenv()
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
-bot.run(os.getenv('DiscordToken')) #test comment funny haha
+def main():
+    bot.run(os.getenv('DiscordToken')) #test comment funny haha
+
+if __name__  == '__main__':
+    main()
