@@ -72,10 +72,11 @@ class TwitchDiscordCog(commands.Cog):
         #if the stream is live then use its data to update the embed
         #if a stream isn't live this data doesn't exist
         if streamEmbedDict['live'] == True:
-            embed=discord.Embed(title="**" + streamEmbedDict['name'] + "** is Live with " + str(streamEmbedDict['viewers']) + " viewers!", 
-                                url="https://www.twitch.tv/" + arg, 
-                                description=streamEmbedDict['stream_title'], 
-                                color=0x6441a4)
+            embed=discord.Embed(
+                title="**" + streamEmbedDict['name'] + "** is Live with " + str(streamEmbedDict['viewers']) + " viewers!", 
+                url="https://www.twitch.tv/" + arg, 
+                description=streamEmbedDict['stream_title'], 
+                color=0x6441a4)
 
             embed.set_author(name="🔴LIVE🔴")
             embed.set_thumbnail(url=streamEmbedDict['pfp'])
@@ -88,9 +89,10 @@ class TwitchDiscordCog(commands.Cog):
             await ctx.channel.send(embed=embed)
         #A default embed for when they're offline
         else:
-            embed=discord.Embed(title="**" + streamEmbedDict['name'] + "** is Offline", 
-                                url="https://www.twitch.tv/" + arg,  
-                                color=0x6441a4)
+            embed=discord.Embed(
+                title="**" + streamEmbedDict['name'] + "** is Offline", 
+                url="https://www.twitch.tv/" + arg,  
+                color=0x6441a4)
             embed.set_thumbnail(url=streamEmbedDict['pfp'])
 
             await ctx.channel.send(embed=embed)
