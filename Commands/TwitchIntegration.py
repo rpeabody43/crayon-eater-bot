@@ -4,6 +4,7 @@ import os       #getting info from .env again
 import discord
 from discord.ext import commands
 
+#Returns a dictionary of all the needed info from the streamer
 def get_stream(streamer):
     #all these credentials should be in a secure file before hosting
     Client_ID = os.getenv('TwitchClientID')         #application id on twitch's website
@@ -79,23 +80,20 @@ class TwitchDiscordCog(commands.Cog):
                 color=0x6441a4)
 
             embed.set_author(name="🔴LIVE🔴")
-            embed.set_thumbnail(url=streamEmbedDict['pfp'])
             embed.add_field(name="Playing", value=streamEmbedDict['game'])
 
             sizedThumbnail = streamEmbedDict['thumbnail'].replace("{width}","1280")
             sizedThumbnail = sizedThumbnail.replace("{height}","720")
             embed.set_image(url=sizedThumbnail)
 
-            await ctx.channel.send(embed=embed)
         #A default embed for when they're offline
         else:
             embed=discord.Embed(
                 title="**" + streamEmbedDict['name'] + "** is Offline", 
                 url="https://www.twitch.tv/" + arg,  
                 color=0x6441a4)
-            embed.set_thumbnail(url=streamEmbedDict['pfp'])
-
-            await ctx.channel.send(embed=embed)
+        embed.set_thumbnail(url=streamEmbedDict['pfp'])
+        await ctx.channel.send(embed=embed)
     
     @stream.error
     async def stream_error(self, ctx, error):
