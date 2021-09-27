@@ -15,8 +15,10 @@ def get_stream(streamer):
     AccessToken = "Bearer " + AuthJson['access_token']
 
     #combining the auth key and client id to get the stream information
-    HEAD = {"Authorization": AccessToken, 
-            "Client-Id": Client_ID}
+    HEAD = {
+        "Authorization": AccessToken, 
+        "Client-Id": Client_ID
+        }
 
     streamURL = "https://api.twitch.tv/helix/streams?user_login=" + streamer #streamer api link 
     #get the data on a specific stream from the api and convert it to json
@@ -28,8 +30,6 @@ def get_stream(streamer):
     streamerURL = "https://api.twitch.tv/helix/users?login=" + streamer
     streamUserProfile = requests.get(url = streamerURL, headers = HEAD)
     userProfileData = json.loads(streamUserProfile.text)
-    
-    
     
     #check if the streamer is live based on whether the data object exists
     # If so we grab a bunch of other data such as viewer count and format it as json for ease of use later
@@ -50,13 +50,13 @@ def get_stream(streamer):
                 }
             
         except Exception as e:
-           return e
+            return e
     else:
         streamInfo = {
-                'live': False, 
-                'name': userProfileData['data'][0]['display_name'], 
-                'pfp': userProfileData['data'][0]['profile_image_url'], 
-                }
+            'live': False, 
+            'name': userProfileData['data'][0]['display_name'], 
+            'pfp': userProfileData['data'][0]['profile_image_url'], 
+            }
     return streamInfo
 
 #A cog is kinda like a commands module for discord
