@@ -74,9 +74,9 @@ class BrainFCog (commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply('$bf (brainf code)')
 
-        if isinstance(error, MemoryError):
+        elif isinstance(error, MemoryError):
             await ctx.reply('*`Failed to compile: Memory Error`*')
-        if isinstance(error, ValueError):
+        elif isinstance(error, ValueError):
             await ctx.reply('*`Failed to compile: Value Error`*')
 
         else:
