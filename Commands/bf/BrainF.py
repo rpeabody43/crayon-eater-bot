@@ -1,10 +1,5 @@
-import discord
-from discord.ext import commands
-
 # arg must be a string
-
-
-def brainf_string(arg):
+def interpret(arg: str) -> str:
     turing_machine = [0] * 100
     pointer = 0
     chars = []
@@ -33,6 +28,7 @@ def brainf_string(arg):
             chars.append(turing_machine[pointer])
 
         elif arg[i] == '[':
+            # Skip over entirety of possible nested loops if value is 0
             if turing_machine[pointer] == 0:
                 loop = 1
                 while loop > 0:
@@ -57,32 +53,5 @@ def brainf_string(arg):
     return_str = ""
     for i in chars:
         return_str += chr(i)
-    # return_str = chars
     return return_str
-
-
-class BrainFCog (commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-
-    @commands.command()
-    async def bf(self, ctx, *, arg):
-        await ctx.reply('```fix\n' + brainf_string(arg) + '```')
-
-    @bf.error
-    async def bf_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.reply('$bf (brainf code)')
-
-        elif isinstance(error, MemoryError):
-            await ctx.reply('*`Failed to compile: Memory Error`*')
-        elif isinstance(error, ValueError):
-            await ctx.reply('*`Failed to compile: Value Error`*')
-
-        else:
-            await ctx.send('*`Failed to compile`*')
-        print("", str(ctx.message.jump_url), str(error), sep='\n')
-
-
-def setup(bot):
-    bot.add_cog(BrainFCog(bot))
+interpret.__doc__ = "A BrainF%@$ interpreter. Outputs ASCII string from bf input"

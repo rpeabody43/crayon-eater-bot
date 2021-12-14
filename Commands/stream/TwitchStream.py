@@ -1,11 +1,33 @@
 import requests #funny library to work with APIs weeeee
 import json     #This sucks and I don't understand it
 import os       #getting info from .env again
-import discord
-from discord.ext import commands
 
+#Streamer must be a twitch username like at the end of the url
 #Returns a dictionary of all the needed info from the streamer
-def get_stream(streamer):
+def get_stream(streamer: str) -> dict:
+    #region docstring
+    """
+    A function that takes in a twitch username, such as xqc, and returns a dictionary of their stream status
+
+    Parameters
+    ---------- 
+    streamer: str
+        the username of the streamer to be processed
+    
+    Returns
+    -------
+    Dictionary that always returns:
+        live        : boolean 
+        name        : string 
+        pfp         : image
+    And only returns if they're live:
+        viewers     : string 
+        stream_title: string
+        game        : string 
+        thumbnail   : image
+    """
+    #endregion
+    
     #all these credentials should be in a secure file before hosting
     Client_ID = os.getenv('TwitchClientID')         #application id on twitch's website
     Client_Secret = os.getenv('TwitchClientSecret') #secret credential that might reset in however many days idk
@@ -59,52 +81,3 @@ def get_stream(streamer):
             'pfp': userProfileData['data'][0]['profile_image_url'], 
             }
     return streamInfo
-
-#A cog is kinda like a commands module for discord
-class TwitchDiscordCog(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-    
-    @commands.command()
-    async def stream(self, ctx, arg):
-        #get the stream information from the appropriate function
-        streamEmbedDict = get_stream(arg)
-    
-        #if the stream is live then use its data to update the embed
-        #if a stream isn't live this data doesn't exist
-        if streamEmbedDict['live'] == True:
-            embed=discord.Embed(
-                title="**" + streamEmbedDict['name'] + "** is Live with " + str(streamEmbedDict['viewers']) + " viewers!", 
-                url="https://www.twitch.tv/" + arg, 
-                description=streamEmbedDict['stream_title'], 
-                color=0x6441a4)
-
-            embed.set_author(name="🔴LIVE🔴")
-            embed.add_field(name="Playing", value=streamEmbedDict['game'])
-
-            sizedThumbnail = streamEmbedDict['thumbnail'].replace("{width}","1280")
-            sizedThumbnail = sizedThumbnail.replace("{height}","720")
-            embed.set_image(url=sizedThumbnail)
-
-        #A default embed for when they're offline
-        else:
-            embed=discord.Embed(
-                title="**" + streamEmbedDict['name'] + "** is Offline", 
-                url="https://www.twitch.tv/" + arg,  
-                color=0x6441a4)
-        embed.set_thumbnail(url=streamEmbedDict['pfp'])
-        await ctx.channel.send(embed=embed)
-    
-    @stream.error
-    async def stream_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("$stream (streamer name)")
-        elif isinstance(error, commands.CommandInvokeError):
-            embed=discord.Embed(title="**Could not find streamer**")
-            await ctx.send(embed=embed)
-        else:
-            await ctx.send("Unexpected error: " + str(error))
-        print("", str(ctx.message.jump_url), str(error), sep="\n")
-
-def setup(bot):
-    bot.add_cog(TwitchDiscordCog(bot))
