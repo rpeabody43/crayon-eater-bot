@@ -1,3 +1,5 @@
 .env
-.vs/Crayon Eater Discord Bot/v16/.suo
-Commands/__pycache__
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
