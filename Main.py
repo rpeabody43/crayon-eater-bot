@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 
 # creating a bot instance, the connection to discord
 bot = commands.Bot(command_prefix='$')
-bot.load_extension('Commands.stream.TwitchCog')
-bot.load_extension('Commands.bf.BrainFCog')
+bot.load_extension('commands.stream.twitch_cog')
+bot.load_extension('commands.bf.brainf_cog')
 
 load_dotenv()
 

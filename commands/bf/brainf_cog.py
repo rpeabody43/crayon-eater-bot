@@ -1,7 +1,7 @@
 from discord.ext import commands
-import Commands.bf.BrainF as BrainF
+import commands.bf.brainf as brainf
 
-class BrainFCog (commands.Cog):
+class brainf_cog (commands.Cog):
     """
     A Discord bot cog to add a BrainF&#@ interpreter
 
@@ -16,7 +16,7 @@ class BrainFCog (commands.Cog):
 
     @commands.command()
     async def bf(self, ctx, *, arg):
-        await ctx.reply('```fix\n' + BrainF.interpret(arg) + '```')
+        await ctx.reply('```fix\n' + brainf.interpret(arg) + '```')
 
     @bf.error
     async def bf_error(self, ctx, error):
@@ -34,4 +34,4 @@ class BrainFCog (commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(BrainFCog(bot))
+    bot.add_cog(brainf_cog(bot))
