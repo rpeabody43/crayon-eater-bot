@@ -5,7 +5,6 @@ import os       #getting info from .env again
 #Streamer must be a twitch username like at the end of the url
 #Returns a dictionary of all the needed info from the streamer
 def get_stream(streamer: str) -> dict:
-    #region docstring
     """
     A function that takes in a twitch username, such as xqc, and returns a dictionary of their stream status
 
@@ -26,7 +25,6 @@ def get_stream(streamer: str) -> dict:
         game        : string 
         thumbnail   : image
     """
-    #endregion
     
     #all these credentials should be in a secure file before hosting
     Client_ID = os.getenv('TwitchClientID')         #application id on twitch's website
