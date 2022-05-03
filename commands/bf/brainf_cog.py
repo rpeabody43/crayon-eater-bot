@@ -1,7 +1,7 @@
 from discord.ext import commands
 import commands.bf.brainf as brainf
 
-class brainf_cog (commands.Cog):
+class BrainFCog (commands.Cog):
     """
     A Discord bot cog to add a BrainF&#@ interpreter
 
@@ -34,4 +34,4 @@ class brainf_cog (commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(brainf_cog(bot))
+    bot.add_cog(BrainFCog(bot))

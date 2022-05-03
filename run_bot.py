@@ -16,6 +16,7 @@ load_dotenv()
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
+    await bot.change_presence(activity=discord.Game(name='Balls 3D 🚀🚀🚀'))
 
 
 def main():

@@ -3,7 +3,7 @@ from discord.ext import commands
 import commands.stream.twitch_stream as twitch
 
 #A cog is kinda like a commands module for discord
-class twitch_cog(commands.Cog):
+class TwitchCog(commands.Cog):
     #region docstring
     """
     A Discord bot cog to add minor Twitch integration
@@ -60,4 +60,4 @@ class twitch_cog(commands.Cog):
         print("", str(ctx.message.jump_url), str(error), sep="\n")
 
 def setup(bot):
-    bot.add_cog(twitch_cog(bot))
+    bot.add_cog(TwitchCog(bot))
