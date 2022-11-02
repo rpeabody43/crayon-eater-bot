@@ -1,10 +1,10 @@
 import discord
+from discord import app_commands
 from discord.ext import commands
-import commands.stream.twitch_stream as twitch
+from . import twitch_stream as twitch
 
 #A cog is kinda like a commands module for discord
 class TwitchCog(commands.Cog):
-    #region docstring
     """
     A Discord bot cog to add minor Twitch integration
 
@@ -13,22 +13,30 @@ class TwitchCog(commands.Cog):
     stream:
         takes in a Twitch streamer username, returns an embed of their status
     """
-    #endregion
 
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command()
-    async def stream(self, ctx, arg):
+    @app_commands.command(
+            name='stream',
+            description='Get information from a twitch stream'
+        )
+    async def stream(
+        self, interaction: discord.Interaction, streamer: str):
         #get the stream information from the appropriate function
-        streamEmbedDict = twitch.get_stream(arg)
-    
+        try:
+            streamEmbedDict = twitch.get_stream(streamer)
+        except:
+            embed=discord.Embed(title="**Could not find streamer**")
+            interaction.response.send_message(embed=embed)
+            return
+        
         #if the stream is live then use its data to update the embed
         #if a stream isn't live this data doesn't exist
         if streamEmbedDict['live'] == True:
             embed=discord.Embed(
                 title="**" + streamEmbedDict['name'] + "** is Live with " + str(streamEmbedDict['viewers']) + " viewers!", 
-                url="https://www.twitch.tv/" + arg, 
+                url="https://www.twitch.tv/" + streamer, 
                 description=streamEmbedDict['stream_title'], 
                 color=0x6441a4)
 
@@ -43,10 +51,10 @@ class TwitchCog(commands.Cog):
         else:
             embed=discord.Embed(
                 title="**" + streamEmbedDict['name'] + "** is Offline", 
-                url="https://www.twitch.tv/" + arg,  
+                url="https://www.twitch.tv/" + streamer,  
                 color=0x6441a4)
         embed.set_thumbnail(url=streamEmbedDict['pfp'])
-        await ctx.channel.send(embed=embed)
+        await interaction.response.send_message(embed=embed)
     
     @stream.error
     async def stream_error(self, ctx, error):
@@ -59,5 +67,5 @@ class TwitchCog(commands.Cog):
             await ctx.send("Unexpected error: " + str(error))
         print("", str(ctx.message.jump_url), str(error), sep="\n")
 
-def setup(bot):
-    bot.add_cog(TwitchCog(bot))
+async def setup(bot: commands.Bot):
+    await bot.add_cog(TwitchCog(bot))

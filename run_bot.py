@@ -1,27 +1,34 @@
+import discord
+from discord.ext import commands
+import aiohttp
 
-import discord  # boy I wonder what this is
-from discord.ext import commands  # commands module of the discord api
-import os  # open .env files
+import os
 from dotenv import load_dotenv
-
-# creating a bot instance, the connection to discord
-bot = commands.Bot(command_prefix='$')
-bot.load_extension('commands.stream.twitch_cog')
-bot.load_extension('commands.bf.brainf_cog')
 
 load_dotenv()
 
-# @bot.event is used to register an event
-# on_ready is called when the bot is ready to be used (good for initialization)
-@bot.event
-async def on_ready():
-    print('We have logged in as {0.user}'.format(bot))
-    await bot.change_presence(activity=discord.Game(name='Balls 3D 🚀🚀🚀'))
+class CrayonBot (commands.Bot):
+    
+    def __init__(self):
+        super().__init__(
+            command_prefix='$',
+            intents = discord.Intents.all(),
+            application_id = 839290702331641907
+        )
 
+    async def setup_hook(self):
+        self.session = aiohttp.ClientSession()
+        await self.load_extension('commands.stream.cog')
+        await self.load_extension('commands.bf.cog')
+        await self.tree.sync()
+
+    async def on_ready(self):
+        print(f'We have logged in as {self.user}')
+        await self.change_presence(activity=discord.Game(name="Balls 3D 🚀🚀🚀"))
 
 def main():
-    bot.run(os.getenv('DiscordToken'))
+    bot = CrayonBot()
+    bot.run(token=os.getenv('DiscordToken'))
 
-
-if __name__ == '__main__':
+if __name__  == '__main__':
     main()
