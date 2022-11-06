@@ -18,7 +18,7 @@ class BrainFCog (commands.Cog):
 
     @app_commands.command(
         name='bf',
-        description='Interpret some bf code, returns and ASCII string'
+        description='Interpret some bf code, returns an ASCII string'
     )
     async def bf(self, interaction: discord.Interaction, code: str):
         response = ''

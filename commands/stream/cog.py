@@ -18,9 +18,9 @@ class TwitchCog(commands.Cog):
         self.bot = bot
     
     @app_commands.command(
-            name='stream',
-            description='Get information from a twitch stream'
-        )
+        name='stream',
+        description='Get information from a twitch stream'
+    )
     async def stream(
         self, interaction: discord.Interaction, streamer: str):
         #get the stream information from the appropriate function
