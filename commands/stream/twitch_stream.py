@@ -1,6 +1,6 @@
-import requests #funny library to work with APIs weeeee
-import json     #This sucks and I don't understand it
-import os       #getting info from .env again
+import requests
+import json     
+import os       
 
 #Streamer must be a twitch username like at the end of the url
 #Returns a dictionary of all the needed info from the streamer

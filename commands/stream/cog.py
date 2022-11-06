@@ -21,8 +21,7 @@ class TwitchCog(commands.Cog):
         name='stream',
         description='Get information from a twitch stream'
     )
-    async def stream(
-        self, interaction: discord.Interaction, streamer: str):
+    async def stream(self, interaction: discord.Interaction, streamer: str):
         #get the stream information from the appropriate function
         try:
             streamEmbedDict = twitch.get_stream(streamer)
@@ -55,17 +54,6 @@ class TwitchCog(commands.Cog):
                 color=0x6441a4)
         embed.set_thumbnail(url=streamEmbedDict['pfp'])
         await interaction.response.send_message(embed=embed)
-    
-    @stream.error
-    async def stream_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("$stream (streamer name)")
-        elif isinstance(error, commands.CommandInvokeError):
-            embed=discord.Embed(title="**Could not find streamer**")
-            await ctx.send(embed=embed)
-        else:
-            await ctx.send("Unexpected error: " + str(error))
-        print("", str(ctx.message.jump_url), str(error), sep="\n")
 
-async def setup(bot: commands.Bot):
+async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(TwitchCog(bot))

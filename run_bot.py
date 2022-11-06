@@ -7,6 +7,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+def load_extensions ():
+    everything = os.listdir('commands')
+    to_load = [f'commands.{x}.cog' for x in everything if x != '__pycache__']
+    print(to_load)
+
 class CrayonBot (commands.Bot):
     
     def __init__(self):
@@ -18,8 +23,14 @@ class CrayonBot (commands.Bot):
 
     async def setup_hook(self):
         self.session = aiohttp.ClientSession()
-        await self.load_extension('commands.stream.cog')
-        await self.load_extension('commands.bf.cog')
+        
+        # loading commands
+        everything = os.listdir('commands')
+        to_load = [f'commands.{x}.cog' for x in everything if x != '__pycache__']
+        for command in to_load:
+            await self.load_extension(command)
+            print (f'{command} loaded')
+
         await self.tree.sync()
 
     async def on_ready(self):
