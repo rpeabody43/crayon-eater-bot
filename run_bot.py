@@ -35,7 +35,7 @@ class CrayonBot (commands.Bot):
 
     async def on_ready(self):
         print(f'We have logged in as {self.user}')
-        await self.change_presence(activity=discord.Game(name="Balls 3D 🚀🚀🚀"))
+        await self.change_presence(activity=discord.Game(name="Balls 3D"))
 
 def main():
     bot = CrayonBot()
