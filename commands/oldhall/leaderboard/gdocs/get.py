@@ -38,7 +38,7 @@ def read_structural_elements(elements):
 def teacher_list(doc: str) -> list[str]:
     with open (join(dir, 'dailypost.txt'), 'w') as f:
         f.write(doc)
-    start = 'Remember to check back frequently for updates'
+    start = 'Absent Teachers:'
     startidx = doc.index(start) + len(start)
     end = 'Freshmen are reminded'
     endidx = doc.index(end)
