@@ -1,5 +1,6 @@
 from datetime import datetime, time
 import pytz
+import re
 from os.path import isfile, join, dirname
 import json
 
@@ -25,6 +26,30 @@ def write (to_increment: set[str], leaderboard: dict):
     if not during_school_day(): return
 
     today = datetime.now(pytz.timezone('America/New_York')).strftime('%d-%m-%Y')
+    
+    daily_post_path = join(dir, 'gdocs', 'dailypost.txt')
+    # if the date at the top of the post is not today, don't run
+    # kinda janky but it works
+    with open (daily_post_path, 'r') as f:
+        daily_post = f.read()
+        rgx = '([0-1]?[0-2])\/([0-3]?[0-9])\/202.'
+        dp_date_search = re.search(rgx, daily_post)
+        if dp_date_search is not None:
+            dp_date_str = dp_date_search.group()
+            print(dp_date_str)
+
+            first_slash = dp_date_str.index('/')
+            second_slash = dp_date_str[first_slash+1:].index('/') + first_slash+1
+            dp_date = datetime(
+                year=int(dp_date_str[second_slash+1:]),
+                month=int(dp_date_str[:first_slash]),
+                day=int(dp_date_str[first_slash+1:second_slash])
+                )
+
+            if dp_date.strftime('%d-%m-%Y') != today:
+                print('Post not updated today')
+                return
+
     tmp_filepath = join(dir, 'tmp', f'{today}.json')
     cached_leaderboard_path = join(dir, 'tmp', 'leaderboard.json')
     
