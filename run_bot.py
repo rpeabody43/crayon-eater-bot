@@ -7,11 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def load_extensions ():
-    everything = os.listdir('commands')
-    to_load = [f'commands.{x}.cog' for x in everything if x != '__pycache__']
-    print(to_load)
-
 class CrayonBot (commands.Bot):
     
     def __init__(self):
