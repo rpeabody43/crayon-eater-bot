@@ -36,7 +36,6 @@ def write (to_increment: set[str], leaderboard: dict):
         dp_date_search = re.search(rgx, daily_post)
         if dp_date_search is not None:
             dp_date_str = dp_date_search.group()
-            print(dp_date_str)
 
             first_slash = dp_date_str.index('/')
             second_slash = dp_date_str[first_slash+1:].index('/') + first_slash+1
@@ -46,7 +45,10 @@ def write (to_increment: set[str], leaderboard: dict):
                 day=int(dp_date_str[first_slash+1:second_slash])
                 )
 
-            if dp_date.strftime('%d-%m-%Y') != today:
+            last_updated = dp_date.strftime('%d-%m-%Y')
+            with open (join(dir, 'last_updated.txt'), 'w') as f:
+                f.write(last_updated)
+            if last_updated != today:
                 print('Post not updated today')
                 return
 
@@ -78,3 +80,5 @@ def write (to_increment: set[str], leaderboard: dict):
     
     with open (join(dir, 'leaderboard.json'), 'w') as f:
         f.write(json.dumps(leaderboard, indent=4))
+
+    
