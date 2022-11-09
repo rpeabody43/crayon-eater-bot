@@ -13,19 +13,19 @@ class SetEncoder (json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 # old hall list can't be trusted while school's not in session
-def during_school_day () -> bool:
-    tz = pytz.timezone('America/New_York')
-    now = datetime.now(tz)
-    if now.weekday() >= 5: return False
-    time_rn = now.time()
-    return time(9, 0, 0, 0, tz) < time_rn  < time(15, 0, 0, 0, tz)
+# def during_school_day () -> bool:
+#     tz = pytz.timezone('America/New_York')
+#     now = datetime.now(tz)
+#     if now.weekday() >= 5: return False
+#     time_rn = now.time()
+#     return time(9, 0, 0, 0, tz) < time_rn  < time(15, 0, 0, 0, tz)
 
 
 def write (to_increment: set[str], leaderboard: dict):
 
-    if not during_school_day(): return
+    # if not during_school_day(): return
 
-    today = datetime.now(pytz.timezone('America/New_York')).strftime('%d-%m-%Y')
+    today = datetime.now(pytz.timezone('America/New_York')).strftime('%m-%d-%Y')
     
     daily_post_path = join(dir, 'gdocs', 'dailypost.txt')
     # if the date at the top of the post is not today, don't run
@@ -45,7 +45,7 @@ def write (to_increment: set[str], leaderboard: dict):
                 day=int(dp_date_str[first_slash+1:second_slash])
                 )
 
-            last_updated = dp_date.strftime('%d-%m-%Y')
+            last_updated = dp_date.strftime('%m-%d-%Y')
             # janky way it can be displayed in the discord embed
             with open (join(dir, 'last_updated.txt'), 'w') as f:
                 f.write(last_updated)
@@ -88,4 +88,4 @@ def last_updated () -> str:
         with open(join(dir, 'last_updated.txt'), 'r') as f:
             return f.read()
     except FileNotFoundError:
-        return datetime.now().strftime('%d-%m-%Y')
+        return datetime.now().strftime('%m-%d-%Y')
