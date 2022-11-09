@@ -7,7 +7,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-logging_handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+logging_handler = logging.FileHandler(filename='logs/discord.log', encoding='utf-8', mode='w')
 
 class CrayonBot (commands.Bot):
     
@@ -27,6 +27,7 @@ class CrayonBot (commands.Bot):
         for command in to_load:
             await self.load_extension(command)
             print (f'{command} loaded')
+        await self.load_extension('logs.log_cog')
 
         await self.tree.sync()
 
