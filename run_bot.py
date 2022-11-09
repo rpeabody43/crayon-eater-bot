@@ -1,11 +1,13 @@
 import discord
 from discord.ext import commands
 import aiohttp
+import logging
 
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+logging_handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 
 class CrayonBot (commands.Bot):
     
@@ -34,7 +36,7 @@ class CrayonBot (commands.Bot):
 
 def main():
     bot = CrayonBot()
-    bot.run(token=os.getenv('DiscordToken'))
+    bot.run(token=os.getenv('DiscordToken'), log_handler=logging_handler)
 
 if __name__  == '__main__':
     main()
