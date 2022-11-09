@@ -4,7 +4,7 @@ from discord.ext import commands
 import Paginator
 from datetime import datetime
 
-from .leaderboard import update, fmt
+from .leaderboard import update, fmt, last_updated
 
 class OldHallCog (commands.Cog):
 
@@ -19,6 +19,8 @@ class OldHallCog (commands.Cog):
         update()
         leaderboard = fmt()
         pages = []
+
+        updated = last_updated()
 
         for i in range((len(leaderboard) // 5) + 1):
             start = i*5
@@ -35,7 +37,7 @@ class OldHallCog (commands.Cog):
                 embed.add_field(name=k, value=str(v), inline=False)
             # the logo hosted on discord because it's easy
             embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/824741381578162201/1038939780110626937/logo.png')
-            embed.set_footer(text=f"Last updated {datetime.now().strftime('%m/%d/%Y at %H:%M')}")
+            embed.set_footer(text=f"Last updated {updated}")
             pages.append(embed)
 
         await Paginator.Simple().start(interaction, pages=pages)

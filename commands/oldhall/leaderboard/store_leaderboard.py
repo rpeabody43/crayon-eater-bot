@@ -46,6 +46,7 @@ def write (to_increment: set[str], leaderboard: dict):
                 )
 
             last_updated = dp_date.strftime('%d-%m-%Y')
+            # janky way it can be displayed in the discord embed
             with open (join(dir, 'last_updated.txt'), 'w') as f:
                 f.write(last_updated)
             if last_updated != today:
@@ -81,4 +82,10 @@ def write (to_increment: set[str], leaderboard: dict):
     with open (join(dir, 'leaderboard.json'), 'w') as f:
         f.write(json.dumps(leaderboard, indent=4))
 
-    
+
+def last_updated () -> str:
+    try:
+        with open(join(dir, 'last_updated.txt'), 'r') as f:
+            return f.read()
+    except FileNotFoundError:
+        return datetime.now().strftime('%d-%m-%Y')
