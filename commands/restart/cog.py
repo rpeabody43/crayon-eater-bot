@@ -2,7 +2,6 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import subprocess
-import sys
 
 class RestartCog (commands.Cog):
 
@@ -15,10 +14,11 @@ class RestartCog (commands.Cog):
     )
     # replace arg: int with the appropriate parameter and type for your command
     async def restart(self, interaction: discord.Interaction):
-        cmd = '/home/ryan/crayon-eater-bot/run.sh'
+        if interaction.user.id not in [359428780848316417]: 
+            await interaction.response.send_message('`permission denied`')
+        cmd = 'sudo reboot'
         await interaction.response.send_message('`restarting...`')
         subprocess.Popen(cmd, shell=True, executable='/bin/bash')
-        sys.exit()
 
 async def setup (bot: commands.Bot) -> None:
     await bot.add_cog(RestartCog(bot))
