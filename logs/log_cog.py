@@ -18,9 +18,14 @@ class LogCog (commands.Cog):
             with open ('logs/discord.log', 'r') as f:
                 logs = f.read()
         except FileNotFoundError:
-            interaction.response.send_message("`logfile not found`")
+            await interaction.response.send_message("`logfile not found`")
             return
-        
+        rgx = '\[202[0-9]-[0-1][0-9]-[0-3][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]\]'
+        matches = list(re.finditer(rgx, logs))
+        first_log = len(matches)-x
+        ret = logs[matches[first_log].start():] if first_log >= 0 else logs
+        await interaction.user.send(f'```ini\n{ret}```')
+        await interaction.response.send_message('`logs sent`')
 
 
 
