@@ -65,9 +65,9 @@ def update():
     to_increment = set()
 
     for entry in old_hall_entries:
-        entry = entry.upper().strip('\u2019')
+        entry = entry.upper().replace('\u2019', '')
         for name in names:
-            lastname = name[:name.index(',')].upper().strip('\u2019')
+            lastname = name[:name.index(',')].upper().replace('\u2019', '')
             # print(lastname)
             if lastname in entry:
                 if lastname in ['COLEMAN', 'TORO', 'LEE']:
