@@ -40,7 +40,7 @@ def teacher_list(doc: str) -> list[str]:
         f.write(doc)
     start = 'Absent Teachers:'
     startidx = doc.index(start) + len(start)
-    end = 'Freshmen are reminded'
+    end = 'Old Hall Reminders and Guidelines'
     endidx = doc.index(end)
 
     teachers_str = doc[startidx:endidx]
