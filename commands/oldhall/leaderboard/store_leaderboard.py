@@ -32,7 +32,7 @@ def write (to_increment: set[str], leaderboard: dict):
     # kinda janky but it works
     with open (daily_post_path, 'r') as f:
         daily_post = f.read()
-        rgx = '([0-1]?[0-2])\/([0-3]?[0-9])\/202.'
+        rgx = '([0-1]?[0-9])\/([0-3]?[0-9])\/202.'
         dp_date_search = re.search(rgx, daily_post)
         if dp_date_search is not None:
             dp_date_str = dp_date_search.group()
