@@ -2,7 +2,7 @@
 cwd=$(pwd)
 cd /home/ryan/dev/crayon-eater-bot
 git pull
-source env/bin/activate
+source venv/bin/activate
 screen -S discordbot -dm python run_bot.py
 echo created screen with name discordbot
 deactivate
