@@ -42,5 +42,5 @@ class OldHallCog (commands.Cog):
 
         await Paginator.Simple().start(interaction, pages=pages)
 
-async def setup(bot: commands.Bot) -> None:
-    await bot.add_cog(OldHallCog(bot))
+# async def setup(bot: commands.Bot) -> None:
+#     await bot.add_cog(OldHallCog(bot))
