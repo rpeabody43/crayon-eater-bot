@@ -25,8 +25,11 @@ class CrayonBot (commands.Bot):
         everything = os.listdir('commands')
         to_load = [f'commands.{x}.cog' for x in everything if x != '__pycache__']
         for command in to_load:
-            await self.load_extension(command)
-            print (f'{command} loaded')
+            try:
+                await self.load_extension(command)
+                print (f'{command} loaded')
+            except:
+                print (f'{command} unable to load')
         await self.load_extension('logs.log_cog')
 
         await self.tree.sync()
