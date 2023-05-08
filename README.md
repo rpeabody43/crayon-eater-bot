@@ -4,4 +4,3 @@
 Features:
 - /bf: A bf interpreter in discord bot form
 - /stream: get information from a Twitch streamer
-- /most-oldhall: access the leaderboard of most times each AHS teacher has been out sick
